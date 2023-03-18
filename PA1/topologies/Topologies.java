@@ -64,9 +64,77 @@ public class Topologies {
         return true;
     }
 
+    // public static int findCenter(int[][] mat) {
+    //     int n = mat.length;
+
+    //     return -1;
+    // }
+
+    public static boolean checkStar(int[][] mat) {
+        int n = mat.length;
+        // tracks number of ones in the first row
+        int firstOneCount = 0;
+        for(int i = 0; i < n; i++) {
+            if(mat[0][i] == 1) {
+                if(i == 0) {
+                    // a star does not have a loop
+                    return false;
+                }
+                firstOneCount++;
+            }
+        }
+        if(firstOneCount != 1 && firstOneCount != n-1) {
+            // the first row does not meet the star criteria
+            return false;
+        }
+        // find center vertex
+        int center = -1;
+        if(firstOneCount == 1) {
+            // center is location of 1
+            for(int i = 0; i < n; i++) {
+                if(mat[0][i] == 1) {
+                    center = i;
+                }
+            }
+        }
+        else {
+            // center is location of 0
+            for(int i = 0; i < n; i++) {
+                if(mat[0][i] == 0) {
+                    center = i;
+                }
+            }
+        }
+        // check condition for the rest of the matrix
+        for(int i = 1; i < n; i++) {
+            int oneCount = 0;
+            for(int j = 0; j < n; j++) {
+                if(mat[i][j] == 1) {
+                    if(i == j) {
+                        // a star does not have a loop
+                        return false;
+                    }
+                    oneCount++;
+                }
+            }
+            if(i == center) {
+                if(oneCount != n-1) {
+                    // the center row does not have the correct amount of 1s
+                    return false;
+                }
+            }
+            else {
+                if(oneCount != 1) {
+                    // the noncenter row does not have the correct 1 count
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         //printMatrix(readAdjmat());
-        System.out.println(checkMesh(readAdjmat()));
+        System.out.println(checkStar(readAdjmat()));
     }
 }
