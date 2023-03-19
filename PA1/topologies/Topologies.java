@@ -204,7 +204,31 @@ public class Topologies {
         return allTrue(visited);
     }
     public static void main(String[] args) {
-        //printMatrix(readAdjmat());
-        System.out.println(checkRing(readAdjmat()));
+        int[][] adjmat = readAdjmat();
+        File f = new File("./PA1/topologies/output.txt");
+        FileWriter outputWriter;
+        try {
+            outputWriter = new FileWriter(f);
+            long start = System.nanoTime();
+            // O(n^2) time complexity
+            if(checkMesh(adjmat)) {
+                outputWriter.write("Mesh");
+            }
+            else if(checkRing(adjmat)) {
+                outputWriter.write("Ring");
+            }
+            else if(checkStar(adjmat)) {
+                outputWriter.write("Star");
+            }
+            else {
+                outputWriter.write("No pattern");
+            }
+            System.out.println("Time of execution in nanoseconds: " + (System.nanoTime() - start));
+            outputWriter.close();
+        }
+        catch(IOException e) {
+            System.out.println("output.txt does not exist");
+            return;
+        }
     }
 }
