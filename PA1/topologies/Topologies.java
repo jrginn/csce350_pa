@@ -64,12 +64,6 @@ public class Topologies {
         return true;
     }
 
-    // public static int findCenter(int[][] mat) {
-    //     int n = mat.length;
-
-    //     return -1;
-    // }
-
     public static boolean checkStar(int[][] mat) {
         int n = mat.length;
         // tracks number of ones in the first row
@@ -133,8 +127,84 @@ public class Topologies {
         return true;
     }
 
+    /**
+     * Helper method to find one indices in a row
+     * @param row row of adjacency matrix
+     * @return int array of size 2 with indices of first 2 ones
+     * if there are not 2 ones, -1 takes the place of the index
+     */
+    public static int[] findOnes(int[] row) {
+        int[] ret = {-1, -1};
+        int index = 0;
+        for(int i = 0; i < row.length; i++) {
+            if(row[i] == 1 && index < 2) {
+                ret[index] = i;
+                index++;
+            }
+        }
+        return ret;
+    }
+
+    public static int countOnes(int[] row) {
+        int count = 0;
+        for(int i = 0; i < row.length; i++) {
+            if(row[i] == 1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static boolean allTrue(boolean[] arr) {
+        for(boolean b: arr) {
+            if(!b) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkRing(int[][] mat) {
+        if(countOnes(mat[0]) != 2) {
+            // first row doesn't have 2 ones
+            return false;
+        }
+        int[] indices = findOnes(mat[0]);
+        // used to start traversal
+        int next = indices[0];
+        int last = indices[1];
+        if(next == 0) {
+            // next cannot be 0
+            return false;
+        }
+        int n = mat.length;
+        boolean[] visited = new boolean[n];
+        visited[0] = true;
+        int previous = 0;
+        while(next != last) {
+            if(visited[next]) {
+                // already visited this vertex, so not a cycle
+                return false;
+            }
+            visited[next] = true;
+            if(countOnes(mat[next]) != 2) {
+                // invalid row
+                return false;
+            }
+            indices = findOnes(mat[next]);
+            previous = next;
+            next = indices[1];
+        }
+        visited[last] = true;
+        indices = findOnes(mat[last]);
+        if(indices[0] != 0 || indices[1] != previous) {
+            // the final row does not satisfy the condition
+            return false;
+        }
+        return allTrue(visited);
+    }
     public static void main(String[] args) {
         //printMatrix(readAdjmat());
-        System.out.println(checkStar(readAdjmat()));
+        System.out.println(checkRing(readAdjmat()));
     }
 }
