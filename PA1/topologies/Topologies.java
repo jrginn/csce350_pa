@@ -19,7 +19,7 @@ public class Topologies {
         ArrayList<String[]> lines = new ArrayList<>();
         while(scan.hasNextLine()) {
             // adds array of 0s and 1s to lines
-            lines.add(scan.nextLine().split(" "));
+            lines.add(scan.nextLine().split("\\s"));
         }
         // ensures file has at least one entry
         if(lines.size() < 1) {
