@@ -205,6 +205,10 @@ public class Topologies {
     }
     public static void main(String[] args) {
         int[][] adjmat = readAdjmat();
+        if(adjmat == null) {
+            System.out.println("output.txt does not exist");
+            return;
+        }
         File f = new File("./PA1/topologies/output.txt");
         FileWriter outputWriter;
         try {
