@@ -32,10 +32,10 @@ public class QS {
      */
     public static int partition(double[] arr, int l, int r) {
         double p = arr[l];
-        int i = l+1;
+        int i = l;
         int j = r;
         while(i < j) {
-            while(arr[i] <= p && i <= r) {
+            while(arr[i] <= p && i < r) {
                 i++;
             }
             
@@ -97,6 +97,26 @@ public class QS {
         return str;
     }
 
+    // Used to test the validity of the sorting
+    public static double[] generateRandArr(int n) {
+        double[] arr = new double[n];
+        for(int i = 0; i < n; i++) {
+            arr[i] = Math.random() * 20;
+        }
+        return arr;
+    }
+
+    // Used to test the validity of the sorting
+    public static boolean checkSorted(double[] arr) {
+        for(int i = 0; i < arr.length - 1; i++) {
+            if(arr[i] > arr[i+1])
+            {
+                return false;
+            }  
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         double[] arr = readArray("./PA1/quicksort/input.txt");
         long start = System.nanoTime();
@@ -113,5 +133,21 @@ public class QS {
             System.out.println("output.txt does not exist");
             return;
         }
+
+
+        // Used to check if quicksort is correctly sorting
+        // int sum = 0;
+        // for(int i = 0; i < 1000; i++) {
+        //     double[] arr = generateRandArr(20);
+        //     quickSort(arr, 0, arr.length-1);
+        //     if(!checkSorted(arr)) {
+        //         sum++;
+        //         System.out.println(sum);
+                
+        //     }
+        //     if(i % 50 == 0) {
+        //         System.out.println(writeArray(arr));
+        //     }
+        // }
     }
 }
