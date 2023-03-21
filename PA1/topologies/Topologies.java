@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class Topologies {
 
+    /**
+     * Takes input from input.txt to create adjacency matrix
+     * @return 2d integer adjacency matrix
+     */
     public static int[][] readAdjmat() {
         // creates scanner to read input file
         File f = new File("./PA1/topologies/input.txt");
@@ -39,6 +43,10 @@ public class Topologies {
         return adjmat;
     }
     
+    /**
+     * Prints an adjacency matrix row by row
+     * @param mat adjacency matrix
+     */
     public static void printMatrix(int[][] mat) {
         for(int i = 0; i < mat.length; i++) {
             for(int j = 0; j < mat[i].length; j++) {
@@ -53,9 +61,15 @@ public class Topologies {
         }
     }
 
+    /**
+     * Checks if adjacency matrix follows the mesh pattern
+     * @param mat adjacency matrix
+     * @return true if it is a mesh, false otherwise
+     */
     public static boolean checkMesh(int[][] mat) {
         for(int i = 0; i < mat.length; i++) {
             for(int j = 0; j < mat[0].length; j++) {
+                // Cannot have a loop, every non-diagonal element must be 1
                 if((mat[i][j] == 0 && i != j) || (mat[i][j] == 1 && i == j)) {
                     return false;
                 }
@@ -64,6 +78,11 @@ public class Topologies {
         return true;
     }
 
+    /**
+     * Checks if adjacency matrix follows the star pattern
+     * @param mat adjacency matrix
+     * @return true if it is a star, false otherwise
+     */
     public static boolean checkStar(int[][] mat) {
         int n = mat.length;
         // tracks number of ones in the first row
@@ -145,6 +164,11 @@ public class Topologies {
         return ret;
     }
 
+    /**
+     * Tracks number of 1s in a row
+     * @param row bit array of 0s and 1s
+     * @return number of 1s in row
+     */
     public static int countOnes(int[] row) {
         int count = 0;
         for(int i = 0; i < row.length; i++) {
@@ -155,6 +179,11 @@ public class Topologies {
         return count;
     }
 
+    /**
+     * Checks if boolean array has all true elements
+     * @param arr boolean array
+     * @return false if arr contains a false, true otherwise
+     */
     public static boolean allTrue(boolean[] arr) {
         for(boolean b: arr) {
             if(!b) {
@@ -164,6 +193,11 @@ public class Topologies {
         return true;
     }
 
+    /**
+     * Checks if adjacency matrix follows the ring pattern
+     * @param mat adjacency matrix
+     * @return true if it is a ring, false otherwise
+     */
     public static boolean checkRing(int[][] mat) {
         if(countOnes(mat[0]) != 2) {
             // first row doesn't have 2 ones
