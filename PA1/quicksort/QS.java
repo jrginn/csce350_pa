@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class QS {
@@ -64,8 +65,8 @@ public class QS {
      * Creates a double array based on the contents of input.txt
      * @return array with doubles in input.txt
      */
-    public static double[] readArray() {
-        File f = new File("./PA1/quicksort/input.txt");
+    public static double[] readArray(String filepath) {
+        File f = new File(filepath);
         Scanner scan;
         try {
             scan = new Scanner(f);
@@ -89,15 +90,15 @@ public class QS {
      */
     public static String writeArray(double[] arr) {
         String str = "";
+        DecimalFormat numberFormat = new DecimalFormat("#.###");
         for(Double d: arr) {
-            //System.out.print(d + " ");
-            str += d + " ";
+            str += numberFormat.format(d) + " ";
         }
         return str;
     }
 
     public static void main(String[] args) {
-        double[] arr = readArray();
+        double[] arr = readArray("./PA1/quicksort/input.txt");
         long start = System.nanoTime();
         quickSort(arr, 0, arr.length-1);
         System.out.println("Time of execution in nanoseconds: " + (System.nanoTime() - start));
