@@ -5,23 +5,30 @@ public class MaxHeap {
     private int[] heap;
 
     public MaxHeap(int[] heap) {
-        this.heap = heapify(heap);
+        // Uses array of n + 1 length to account for 1-indexing
+        int[] arr = new int[heap.length + 1];
+        arr[0] = -1;
+        for(int i = 1; i < arr.length; i++) {
+            arr[i] = heap[i-1];
+        }
+        this.heap = heapify(arr);
     }
 
     public static int[] heapify(int[] heap) {
         // implements HeapBottomUp from textbook
         // Subtracts one from indices to account for book's one-indexing
-        for(int i = heap.length/2; i >= 0; i--) {
+        int n = heap.length - 1;
+        for(int i = n/2; i >= 1; i--) {
             int k = i;
             int v = heap[k];
             boolean isHeap = false;
             // checks parental dominance until fully satisfied
-            while(!isHeap && 2 * k + 2 < heap.length) {
-                int j = 2 * k + 1;
+            while(!isHeap && 2 * k <= n) {
+                int j = 2 * k;
                 // two children, finds largest
-                if(j < heap.length) {
+                if(j < n) {
                     if(heap[j] < heap[j + 1]) {
-                        j = j++;
+                        j++;
                     }
                 }
                 // parental dominance is satisfied
@@ -45,8 +52,8 @@ public class MaxHeap {
 
     public String toString() {
         String str = "";
-        for(Integer x: heap) {
-            str += x + " ";
+        for(int i = 1; i < heap.length; i++) {
+            str += heap[i] + " ";
         }
         return str.substring(0, str.length()-1);
     }

@@ -21,7 +21,7 @@ public class MinHeap {
                 // two children, finds smallest
                 if(j < heap.length) {
                     if(heap[j] > heap[j + 1]) {
-                        j = j++;
+                        j++;
                     }
                 }
                 // parental dominance is violated (good for MinHeap)
