@@ -56,6 +56,14 @@ public class MaxHeap {
         return this.heap;
     }
 
+    public int[] getHeapContents() {
+        int[] nums = new int[heap.length -1];
+        for(int i = 0; i < nums.length; i++) {
+            nums[i] = heap[i + 1];
+        }
+        return nums;
+    }
+
     public String toString() {
         String str = "";
         for(int i = 1; i < heap.length; i++) {
