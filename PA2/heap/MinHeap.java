@@ -5,31 +5,36 @@ public class MinHeap {
     private int[] heap;
 
     public MinHeap(int[] heap) {
-        this.heap = heapify(heap);
+        int[] arr = new int[heap.length + 1];
+        arr[0] = -1;
+        for(int i = 1; i < arr.length; i++) {
+            arr[i] = heap[i-1];
+        }
+        this.heap = heapify(arr);
     }
 
     public static int[] heapify(int[] heap) {
         // implements HeapBottomUp from textbook for MinHeap
-        // Subtracts one from indices to account for book's one-indexing
-        for(int i = heap.length/2; i >= 0; i--) {
+        int n = heap.length - 1;
+        for(int i = n/2; i >= 1; i--) {
             int k = i;
             int v = heap[k];
             boolean isHeap = false;
-            // checks parental dominance until fully satisfied
-            while(!isHeap && 2 * k + 2 < heap.length) {
-                int j = 2 * k + 1;
+            // checks parental dominance until not present
+            while(!isHeap && 2 * k <= n) {
+                int j = 2 * k;
                 // two children, finds smallest
-                if(j < heap.length) {
+                if(j < n) {
                     if(heap[j] > heap[j + 1]) {
                         j++;
                     }
                 }
-                // parental dominance is violated (good for MinHeap)
+                // parental dominance is not satisfied
                 if(v  <= heap[j]) {
                     isHeap = true;
                 }
                 else {
-                    // swaps with smaller child
+                    // swaps with larger child
                     heap[k] = heap[j];
                     k = j;
                 }
@@ -37,6 +42,10 @@ public class MinHeap {
             heap[k] = v;
         }
         return heap;
+    }
+
+    public int[] getHeap() {
+        return this.heap;
     }
 
     public String toString() {
