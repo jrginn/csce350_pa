@@ -11,30 +11,30 @@ public class MinHeap {
     public static int[] heapify(int[] heap) {
         // implements HeapBottomUp from textbook for MinHeap
         // Subtracts one from indices to account for book's one-indexing
-        for(int i = heap.length/2; i >= 1; i--) {
+        for(int i = heap.length/2; i >= 0; i--) {
             int k = i;
-            int v = heap[k - 1];
+            int v = heap[k];
             boolean isHeap = false;
             // checks parental dominance until fully satisfied
-            while(!isHeap && 2 * k <= heap.length) {
-                int j = 2 * k;
+            while(!isHeap && 2 * k + 2 < heap.length) {
+                int j = 2 * k + 1;
                 // two children, finds smallest
                 if(j < heap.length) {
-                    if(heap[j - 1] > heap[j]) {
+                    if(heap[j] > heap[j + 1]) {
                         j = j++;
                     }
                 }
                 // parental dominance is violated (good for MinHeap)
-                if(v  <= heap[j - 1]) {
+                if(v  <= heap[j]) {
                     isHeap = true;
                 }
                 else {
                     // swaps with smaller child
-                    heap[k - 1] = heap[j - 1];
+                    heap[k] = heap[j];
                     k = j;
                 }
             }
-            heap[k - 1] = v;
+            heap[k] = v;
         }
         return heap;
     }
