@@ -22,7 +22,7 @@ public class MaxHeap {
 
     public static int[] heapify(int[] heap) {
         // implements HeapBottomUp from textbook
-        // Subtracts one from indices to account for book's one-indexing
+        // heap[0] is dummy value to account for 1-indexing of textbook
         int n = heap.length - 1;
         for(int i = n/2; i >= 1; i--) {
             int k = i;
@@ -56,6 +56,7 @@ public class MaxHeap {
         return this.heap;
     }
 
+    // Returns array without dummy value
     public int[] getHeapContents() {
         int[] nums = new int[heap.length -1];
         for(int i = 0; i < nums.length; i++) {

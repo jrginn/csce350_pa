@@ -21,6 +21,7 @@ public class MinHeap {
 
     public static int[] heapify(int[] heap) {
         // implements HeapBottomUp from textbook for MinHeap
+        // heap[0] is dummy value to account for 1-indexing of textbook
         int n = heap.length - 1;
         for(int i = n/2; i >= 1; i--) {
             int k = i;
