@@ -108,16 +108,56 @@ public class MaxHeap {
         return str;
     }
 
+    public static int[] removeRoot(int[] arr) {
+        int[] ret = new int[arr.length - 1];
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = arr[i+1];
+        }
+        return ret;
+    }
+
+    public static int[] heapsort(MaxHeap heap) {
+        int[] arr = heap.getHeapContents();
+        int[] sorted = new int[arr.length];
+        for(int i = 0; i < sorted.length; i++) {
+            sorted[i] = arr[0];
+            heap = new MaxHeap(removeRoot(arr));
+            arr = heap.getHeapContents();
+        }
+        return sorted;
+    }
+
+    /**
+     * Adds each element of arr to a line
+     * @param arr array of doubles
+     * @return space-separated string containing arr elements
+     */
+    public static String writeArray(int[] arr) {
+        String str = "";
+        for(int i = 0; i < arr.length; i++) {
+            str += arr[i] + " ";
+        }
+        return str;
+    }
+
     public static void main(String[] args) {
         int[] arr = readArray("./PA2/heap/input.txt");
         long start = System.nanoTime();
         MaxHeap heap = new MaxHeap(arr);
-        System.out.println("Time of execution in nanoseconds: " + (System.nanoTime() - start));
+        System.out.println("Time of heap creation in nanoseconds: " + (System.nanoTime() - start));
+        start = System.nanoTime();
+        int[] sorted = heapsort(heap);
+        System.out.println("Time of heapsort in nanoseconds: " + (System.nanoTime() - start));
         File f = new File("./PA2/heap/max_output.txt");
+        File g = new File("./PA2/heap/sort_output.txt");
         FileWriter outputWriter;
         try {
             outputWriter = new FileWriter(f);
             outputWriter.write(writeHeapArray(heap.getHeap()));
+            outputWriter.close();
+            outputWriter = new FileWriter(g);
+            outputWriter.write(writeHeapArray(heap.getHeap()) + "\n");
+            outputWriter.write(writeArray(sorted));
             outputWriter.close();
         }
         catch(IOException e) {
