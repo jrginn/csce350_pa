@@ -1,4 +1,4 @@
-package PA2.horspool;
+package PA3.horspool;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,13 +85,13 @@ public class Horspool {
     }
 
     public static void main(String[] args) {
-        String[] inputs = readInput("./PA2/horspool/input.txt");
+        String[] inputs = readInput("./PA3/horspool/input.txt");
         String pattern = inputs[0];
         String text = inputs[1];
         long start = System.nanoTime();
         int index = checkMatch(pattern, text);
         System.out.println("Execution time: " + (System.nanoTime() - start));
-        File f = new File("./PA2/horspool/output.txt");
+        File f = new File("./PA3/horspool/output.txt");
         FileWriter outputWriter;
         try {
             outputWriter = new FileWriter(f);
