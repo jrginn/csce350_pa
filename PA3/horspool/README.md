@@ -6,5 +6,5 @@ output.txt exists
 To run:
 Clone the github repo into the current directory and change directory into csce350_pa
 From the current directory run 
-    javac ./PA2/horspool/Horspool.java
-    java PA2.horspool.Horspool
+    javac ./PA3/horspool/Horspool.java
+    java PA3.horspool.Horspool
