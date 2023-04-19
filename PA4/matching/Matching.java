@@ -129,12 +129,15 @@ public class Matching {
                     if(!m.containsValue(u)) {
                         // augment
                         m.put(w, u);
+                        m.put(u,w);
                         int v = w;
                         while(labels[v] != -1) {
                             u = labels[v];
                             m.remove(v);
+                            m.remove(u);
                             v = labels[u];
                             m.put(v, u);
+                            m.put(u, v);
                         }
                         revertLabels(labels);
                         // reinitializes queue with free verts
@@ -147,7 +150,7 @@ public class Matching {
                         break;
                     }
                     else {
-                        if((m.containsKey(w) && m.get(w) != u) && labels[u] == -1) {
+                        if((!m.containsKey(w) || m.get(w) != u) && labels[u] == -1) {
                             labels[u] = w;
                             q.add(u);
                         }
@@ -165,7 +168,8 @@ public class Matching {
     public static void main(String[] args) {
         HashMap<Integer, Integer> match = maxMatch(getV(), getU(), readAdjmat());
         for(Integer k: match.keySet()) {
-            System.out.println(k + " " + match.get(k));
+            if(k < 5)
+                System.out.println(k + " " + match.get(k));
         }
     }
 
