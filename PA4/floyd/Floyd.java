@@ -38,6 +38,10 @@ public class Floyd {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
                 adjmat[i][j] = Double.parseDouble(lines.get(i)[j]);
+                if(i != j && adjmat[i][j] == 0) {
+                    // accounts for infinity values
+                    adjmat[i][j] = Double.MAX_VALUE;
+                }
             }
         }
         scan.close();
