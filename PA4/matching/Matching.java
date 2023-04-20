@@ -2,6 +2,8 @@ package PA4.matching;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -165,12 +167,36 @@ public class Matching {
         return m;
     }
 
-    public static void main(String[] args) {
-        HashMap<Integer, Integer> match = maxMatch(getV(), getU(), readAdjmat());
-        for(Integer k: match.keySet()) {
-            if(k < 5)
-                System.out.println(k + " " + match.get(k));
+    public static void writeMatching(HashMap<Integer, Integer> match, HashSet<Integer> v) {
+        File f = new File("./PA4/matching/output.txt");
+        FileWriter outputWriter;
+        try {
+            outputWriter = new FileWriter(f);
+            String vMatches = "";
+            String uMatches = "";
+            for(Integer a: v) {
+                if(match.containsKey(a)) {
+                    vMatches += a + " ";
+                    uMatches += match.get(a) + " ";
+                }
+            }
+            outputWriter.write(vMatches + "\n");
+            outputWriter.write(uMatches);
+            outputWriter.close();
+        } catch (IOException e) {
+            System.out.println("output.txt does not exist");
+            return;
         }
+    }
+
+    public static void main(String[] args) {
+        HashSet<Integer> v = getV();
+        HashSet<Integer> u = getU();
+        int[][] adjMat = readAdjmat();
+        long start = System.nanoTime();
+        HashMap<Integer, Integer> match = maxMatch(v, u, adjMat);
+        System.out.println("Time of execution in nanoseconds: " + (System.nanoTime() - start));
+        writeMatching(match, v);
     }
 
 }
