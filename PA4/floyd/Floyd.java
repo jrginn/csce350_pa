@@ -2,6 +2,8 @@ package PA4.floyd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -79,7 +81,32 @@ public class Floyd {
         return lengths;
     }
 
+    public static String adjMatString(double[][] adjmat) {
+        String str = "";
+        for(int i = 0; i < adjmat.length; i++) {
+            String row = "";
+            for(int j = 0; j < adjmat[i].length; j++) {
+                row += adjmat[i][j] + " ";
+            }
+            str += row.substring(0, row.length()-1) + "\n";
+        }
+        return str.substring(0, str.length()-1);
+    }
+
     public static void main(String[] args) {
-        printMatrix(floydPaths(readAdjmat()));
+        double[][] adjmat = readAdjmat();
+        long start = System.nanoTime();
+        double[][] pathMatrix = floydPaths(adjmat);
+        System.out.println("Time of execution in nanoseconds: " + (System.nanoTime() - start));
+        File f = new File("./PA4/floyd/output.txt");
+        FileWriter outputWriter;
+        try {
+            outputWriter = new FileWriter(f);
+            outputWriter.write(adjMatString(pathMatrix));
+            outputWriter.close();
+        } catch (IOException e) {
+            System.out.println("output.txt does not exist");
+            return;
+        }
     }
 }
